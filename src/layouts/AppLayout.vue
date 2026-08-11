@@ -5,6 +5,12 @@
       <div class="logo">🏠 房屋租赁</div>
       
       <div class="nav">
+        <!-- 公共导航（未登录游客也可见） -->
+        <el-menu v-if="!userInfo" mode="horizontal" :router="true">
+          <el-menu-item index="/">🏠 首页</el-menu-item>
+          <el-menu-item index="/rooms">🏘️ 找房源</el-menu-item>
+          <el-menu-item index="/notices">📢 公告</el-menu-item>
+        </el-menu>
         <el-menu mode="horizontal" :router="true" v-if="userInfo">
           <!-- 租客菜单（role=2） -->
           <template v-if="userInfo.role === 2">

@@ -211,5 +211,144 @@ onMounted(loadData)
   padding: 8px 16px;
   border-radius: 6px;
 }
-/* 样式保持不变 */
+/* ========== 首页容器 ========== */
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+/* ========== 搜索框 ========== */
+.search-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  margin: 24px 0 32px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
+}
+
+/* ========== 区块标题 ========== */
+.section {
+  margin-bottom: 36px;
+}
+.section h2 {
+  margin: 0 0 18px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ========== 房源卡片 ========== */
+.room-card {
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 16px;
+}
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(255, 106, 0, 0.18);
+}
+.room-cover {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.room-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-main);
+}
+.room-price {
+  font-size: 16px;
+  color: #ff6a00;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.room-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* ========== 公告列表 ========== */
+.notice-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
+}
+.notice-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px dashed var(--border-color);
+  transition: background-color 0.2s;
+}
+.notice-list li:last-child {
+  border-bottom: none;
+}
+.notice-list li:hover {
+  background: var(--bg-hover);
+}
+.notice-list a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
+  transition: color 0.2s;
+}
+.notice-list a:hover {
+  color: #ff6a00;
+}
+.notice-time {
+  color: var(--text-sub);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+  .home-page {
+    padding: 0 8px 24px;
+  }
+  .banner-title {
+    left: 16px;
+    bottom: 16px;
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+  .search-box {
+    padding: 14px 16px;
+    gap: 8px;
+  }
+  .section h2 {
+    font-size: 16px;
+  }
+  .room-cover {
+    height: 110px;
+  }
+}
 </style>
