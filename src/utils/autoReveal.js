@@ -21,6 +21,27 @@ const AUTO_REVEAL_SELECTOR = [
 
 const STAGGER_STEP = 60   // 相邻元素交错延迟（ms）
 const STAGGER_MAX = 6     // 最多交错前 6 个，避免长页面延迟过大
+const FALLBACK_DELAY = 3000 // 兜底：进入视口动画 3 秒内未触发则强制显示
+
+// 是否已在视口内（含底部缩进 40px，与 IO rootMargin 保持一致）
+function isInViewport(el) {
+  const rect = el.getBoundingClientRect()
+  const vh = window.innerHeight || document.documentElement.clientHeight
+  return rect.bottom > 0 && rect.top < vh - 40
+}
+
+// 强制显示：防止 IntersectionObserver 首次判断异常导致元素被永久隐藏（opacity: 0）
+function forceShow(el) {
+  if (!document.contains(el)) return
+  if (!el.classList.contains('reveal-in')) {
+    el.classList.add('reveal-in')
+    el.style.transitionDelay = ''
+  }
+  if (el._autoRevealObserver) {
+    el._autoRevealObserver.disconnect()
+    el._autoRevealObserver = null
+  }
+}
 
 function scanOnce() {
   const root = document.getElementById('app')
@@ -33,6 +54,13 @@ function scanOnce() {
     el.classList.add('reveal-init')
     el.style.transitionDelay = `${(order % STAGGER_MAX) * STAGGER_STEP}ms`
     order += 1
+
+    // 首屏元素：已在视口内则直接显示（不依赖 IO 首次异步回调，避免首屏内容永久隐藏）
+    if (isInViewport(el)) {
+      el.classList.add('reveal-in')
+      el.style.transitionDelay = ''
+      return
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -48,6 +76,9 @@ function scanOnce() {
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
     observer.observe(el)
     el._autoRevealObserver = observer
+
+    // 兜底：超时仍未触发动画则强制显示，杜绝"内容永久隐藏"导致的排版错乱
+    setTimeout(() => forceShow(el), FALLBACK_DELAY)
   })
 }
 
