@@ -58,7 +58,7 @@
       </div>
       <el-empty v-if="hotRooms.length === 0 && !loading" description="暂无房源" />
       <el-row :gutter="20">
-        <el-col :span="6" v-for="(room, idx) in hotRooms" :key="room.id" v-reveal="{ delay: (idx % 4) * 80 }">
+        <el-col :xs="12" :sm="6" :md="6" v-for="(room, idx) in hotRooms" :key="room.id" v-reveal="{ delay: (idx % 4) * 80 }">
           <el-card :body-style="{ padding: '10px' }" class="room-card" @click="goDetail(room.id)">
             <img :src="room.cover || `https://loremflickr.com/300/200/house?random=${room.id}`" class="room-cover" />
             <div class="room-title">{{ room.title }}</div>

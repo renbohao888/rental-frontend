@@ -2,7 +2,7 @@
   <div class="favorites-page">
     <h2>❤️ 我的收藏</h2>
     <el-row :gutter="20">
-      <el-col :span="6" v-for="item in favorites" :key="item.id">
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" v-for="item in favorites" :key="item.id">
         <el-card :body-style="{ padding: '12px' }">
           <img :src="item.roomCover || 'https://loremflickr.com/300/200/house?random='+item.roomId" class="room-cover" />
           <div class="room-title">{{ item.roomTitle }}</div>
@@ -75,4 +75,13 @@ onMounted(loadFavorites)
 .room-title { font-size: 16px; font-weight: bold; margin: 8px 0; }
 .room-address { color: #888; font-size: 13px; }
 .pagination { display: flex; justify-content: center; padding: 20px 0; }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .favorites-page { padding: 10px; }
+  .room-cover { height: 150px; }
+}
+@media (max-width: 480px) {
+  .room-cover { height: 200px; }
+}
 </style>

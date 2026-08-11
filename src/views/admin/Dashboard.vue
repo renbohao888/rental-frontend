@@ -6,18 +6,18 @@
     </el-card>
 
     <el-row :gutter="16" v-loading="loading">
-      <el-col :span="6"><el-card class="stat-card clickable" @click="$router.push('/admin/landlords')"><div class="stat-label">房东数量</div><div class="stat-value">{{ stats.userStats?.landlordCount || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card clickable" @click="$router.push('/admin/users')"><div class="stat-label">管理员数量</div><div class="stat-value">{{ stats.userStats?.adminCount || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card green clickable" @click="$router.push('/admin/rooms')"><div class="stat-label">已出租房源</div><div class="stat-value">{{ stats.roomStats?.rentedRooms || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card orange clickable" @click="$router.push('/admin/rooms/audit')"><div class="stat-label">待审核房源</div><div class="stat-value">{{ stats.roomStats?.pendingAuditRooms || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card red clickable" @click="$router.push('/admin/orders')"><div class="stat-label">待处理订单</div><div class="stat-value">{{ stats.orderStats?.pendingOrders || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card blue clickable" @click="$router.push('/admin/orders')"><div class="stat-label">本月订单</div><div class="stat-value">{{ stats.orderStats?.thisMonthOrders || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card money clickable" @click="$router.push('/admin/orders')"><div class="stat-label">本月收入</div><div class="stat-value">¥{{ stats.revenueStats?.thisMonthRevenue || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="stat-card purple clickable" @click="$router.push('/admin/orders')"><div class="stat-label">平均客单价</div><div class="stat-value">¥{{ stats.revenueStats?.avgOrderAmount || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card clickable" @click="$router.push('/admin/landlords')"><div class="stat-label">房东数量</div><div class="stat-value">{{ stats.userStats?.landlordCount || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card clickable" @click="$router.push('/admin/users')"><div class="stat-label">管理员数量</div><div class="stat-value">{{ stats.userStats?.adminCount || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card green clickable" @click="$router.push('/admin/rooms')"><div class="stat-label">已出租房源</div><div class="stat-value">{{ stats.roomStats?.rentedRooms || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card orange clickable" @click="$router.push('/admin/rooms/audit')"><div class="stat-label">待审核房源</div><div class="stat-value">{{ stats.roomStats?.pendingAuditRooms || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card red clickable" @click="$router.push('/admin/orders')"><div class="stat-label">待处理订单</div><div class="stat-value">{{ stats.orderStats?.pendingOrders || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card blue clickable" @click="$router.push('/admin/orders')"><div class="stat-label">本月订单</div><div class="stat-value">{{ stats.orderStats?.thisMonthOrders || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card money clickable" @click="$router.push('/admin/orders')"><div class="stat-label">本月收入</div><div class="stat-value">¥{{ stats.revenueStats?.thisMonthRevenue || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="stat-card purple clickable" @click="$router.push('/admin/orders')"><div class="stat-label">平均客单价</div><div class="stat-value">¥{{ stats.revenueStats?.avgOrderAmount || 0 }}</div></el-card></el-col>
     </el-row>
 
     <el-row :gutter="16" style="margin-top: 16px">
-      <el-col :span="14">
+      <el-col :xs="24" :md="14">
         <el-card>
           <template #header>
             <div class="card-header">
@@ -34,7 +34,7 @@
           </el-table>
         </el-card>
       </el-col>
-      <el-col :span="10">
+      <el-col :xs="24" :md="10">
         <el-card>
           <template #header>
             <div class="card-header">
@@ -113,4 +113,12 @@ onMounted(loadStats)
 .hot-title { font-size: 13px; color: #333; }
 .hot-sub { font-size: 12px; color: #999; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* 手机端适配 - 表格横向滚动 */
+@media (max-width: 768px) {
+  .stat-value { font-size: 22px; }
+  .stat-label { font-size: 12px; }
+  :deep(.el-table) { overflow-x: auto; display: block; }
+  .page-container { padding: 0 4px; }
+}
 </style>

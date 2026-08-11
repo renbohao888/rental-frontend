@@ -334,4 +334,14 @@ const handlePhoneLogin = async () => {
 .login-tabs :deep(.el-tabs__item.is-active) {
   color: #667eea;
 }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .login-bg { max-width: 100%; padding: 12px; }
+  .login-box { padding: 32px 20px 24px; }
+  .logo-area { margin-bottom: 20px; }
+  .logo-area h1 { font-size: 20px; }
+  .logo-icon { font-size: 36px; }
+  .link-row { flex-direction: column; gap: 8px; text-align: center; }
+}
 </style>

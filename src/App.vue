@@ -41,4 +41,23 @@ body {
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* 手机端全局表格横向滚动 */
+@media (max-width: 768px) {
+  .el-table {
+    overflow-x: auto !important;
+    display: block !important;
+  }
+  .el-table .el-table__inner-wrapper {
+    min-width: 600px;
+  }
+  .el-pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .el-dialog {
+    width: 92% !important;
+    margin: 10px auto !important;
+  }
+}
 </style>

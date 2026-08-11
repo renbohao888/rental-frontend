@@ -19,7 +19,7 @@
     <el-empty v-if="roomList.length === 0 && !loading" description="暂无房源" />
 
     <el-row :gutter="20">
-      <el-col :span="6" v-for="room in roomList" :key="room.id">
+      <el-col :xs="12" :sm="6" :md="6" :lg="6" v-for="room in roomList" :key="room.id">
         <el-card :body-style="{ padding: '12px' }" class="room-card" @click="goDetail(room.id)">
           <img :src="room.cover || `https://loremflickr.com/300/200/house?random=${room.id}`" class="room-cover" />
           <div class="room-title">{{ room.title }}</div>
@@ -293,9 +293,12 @@ onMounted(() => {
   .filter-bar :deep(.el-button) {
     width: 100%;
   }
+  
+  .room-actions { flex-wrap: wrap; }
+}
 
-  :deep(.el-col) {
-    width: 100% !important;
-  }
+@media (max-width: 480px) {
+  .room-cover { height: 180px; }
+  .pagination :deep(.el-pagination) { justify-content: center; flex-wrap: wrap; }
 }
 </style>

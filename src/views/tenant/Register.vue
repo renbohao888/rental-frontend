@@ -375,15 +375,12 @@ const handleRegister = async () => {
 @media (max-width: 768px) {
   .register-box {
     padding: 24px;
+    max-width: 100%;
   }
-
-  .logo-area h1 {
-    font-size: 20px;
-  }
-
-  .logo-icon {
-    font-size: 40px;
-  }
+  .register-bg { padding: 12px; }
+  .logo-area h1 { font-size: 20px; }
+  .logo-icon { font-size: 40px; }
+  .role-buttons { flex-direction: column; }
 }
 .avatar-uploader {
   display: flex;

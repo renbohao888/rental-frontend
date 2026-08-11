@@ -819,4 +819,21 @@ html.dark .review-reply { background: rgba(64, 158, 255, 0.12); border-left-colo
 .reply-tag { color: #409eff; font-weight: bold; }
 .review-pagination { display: flex; justify-content: center; padding: 16px 0; }
 .write-review { margin-top: 20px; }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .room-detail-page { padding: 8px; }
+  .room-container { flex-direction: column; gap: 16px; }
+  .room-image .el-image { height: 220px !important; }
+  .image-thumbs .thumb { width: 60px; height: 45px; }
+  .room-title { font-size: 20px; }
+  .room-price .price { font-size: 24px; }
+  .date-picker { flex-direction: column; align-items: stretch; gap: 8px; }
+  .date-picker :deep(.el-date-editor) { width: 100% !important; }
+  .action-buttons { flex-wrap: wrap; }
+  .action-buttons .el-button { flex: 1 1 auto; min-width: 140px; }
+  .booking-form { padding: 12px; }
+  .review-item { padding: 10px 0; }
+  .review-user { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
 </style>

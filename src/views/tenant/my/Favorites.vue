@@ -17,7 +17,7 @@
     </div>
 
     <el-row :gutter="20">
-      <el-col :span="6" v-for="room in favorites" :key="room.id">
+      <el-col :xs="12" :sm="6" :md="6" :lg="6" v-for="room in favorites" :key="room.id">
         <el-card :body-style="{ padding: '12px' }" class="room-card" @click="viewRoom(room.id)">
           <img :src="room.cover || `https://loremflickr.com/300/200/house?random=${room.id}`" class="room-cover" />
           <div class="room-title">{{ room.title }}</div>
@@ -222,10 +222,6 @@ onMounted(() => {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-  }
-
-  :deep(.el-col) {
-    width: 100% !important;
   }
 }
 </style>

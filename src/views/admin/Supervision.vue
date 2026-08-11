@@ -6,10 +6,10 @@
     </el-card>
 
     <el-row :gutter="12" style="margin-bottom: 16px">
-      <el-col :span="6"><el-card class="mini"><div class="mini-label">待处理报修</div><div class="mini-value">{{ stats.pendingRepairs || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="mini"><div class="mini-label">处理中报修</div><div class="mini-value">{{ stats.processingRepairs || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="mini"><div class="mini-label">已完成报修</div><div class="mini-value">{{ stats.completedRepairs || 0 }}</div></el-card></el-col>
-      <el-col :span="6"><el-card class="mini"><div class="mini-label">纠纷总数</div><div class="mini-value">{{ stats.totalDisputes || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="mini"><div class="mini-label">待处理报修</div><div class="mini-value">{{ stats.pendingRepairs || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="mini"><div class="mini-label">处理中报修</div><div class="mini-value">{{ stats.processingRepairs || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="mini"><div class="mini-label">已完成报修</div><div class="mini-value">{{ stats.completedRepairs || 0 }}</div></el-card></el-col>
+      <el-col :xs="12" :sm="6"><el-card class="mini"><div class="mini-label">纠纷总数</div><div class="mini-value">{{ stats.totalDisputes || 0 }}</div></el-card></el-col>
     </el-row>
 
     <el-card>
@@ -122,4 +122,11 @@ onMounted(() => {
 .mini-value { font-size: 24px; font-weight: 700; color: #409eff; margin-top: 6px; }
 .pagination { display: flex; justify-content: center; padding: 20px 0; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .mini-value { font-size: 20px; }
+  :deep(.el-table) { overflow-x: auto; display: block; }
+  :deep(.el-tabs__nav-wrap) { overflow-x: auto; }
+}
 </style>

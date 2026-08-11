@@ -124,4 +124,13 @@ onMounted(loadNotices)
 .notice-meta { font-size: 12px; color: #999; }
 .pagination { display: flex; justify-content: center; padding: 20px 0; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .toolbar :deep(.el-radio-group) { display: flex; flex-wrap: wrap; }
+  .toolbar :deep(.el-radio-button__inner) { padding: 6px 10px; font-size: 13px; }
+  .notice-item { padding: 10px 12px; }
+  .title-text { font-size: 14px; }
+  .pagination :deep(.el-pagination) { flex-wrap: wrap; justify-content: center; }
+}
 </style>
