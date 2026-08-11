@@ -86,6 +86,13 @@
         </el-menu>
       </div>
       
+      <!-- 移动端汉堡按钮 -->
+      <div class="mobile-nav-actions">
+        <el-button link class="hamburger-btn" @click="mobileDrawer = true">
+          <span class="hamburger-icon">☰</span>
+        </el-button>
+      </div>
+
       <!-- 主题切换 -->
       <el-button link class="theme-toggle" :title="isDark ? '切换到浅色模式' : '切换到深色模式'" @click="toggleTheme">
         <span class="theme-icon">{{ isDark ? '🌙' : '☀️' }}</span>
@@ -106,6 +113,62 @@
       </div>
     </header>
 
+    <!-- 移动端侧滑菜单 -->
+    <el-drawer v-model="mobileDrawer" direction="ltr" size="280px" title="导航菜单">
+      <div class="mobile-menu">
+        <template v-if="!userInfo">
+          <div class="mobile-menu-item" @click="navTo('/')">🏠 首页</div>
+          <div class="mobile-menu-item" @click="navTo('/rooms')">🏘️ 找房源</div>
+          <div class="mobile-menu-item" @click="navTo('/notices')">📢 公告</div>
+        </template>
+        <template v-else-if="userInfo.role === 2">
+          <div class="mobile-menu-item" @click="navTo('/tenant/home')">租客首页</div>
+          <div class="mobile-menu-item" @click="navTo('/tenant/search')">找房源</div>
+          <div class="mobile-menu-item" @click="navTo('/tenant/my')">个人中心</div>
+          <div class="mobile-menu-item" @click="navTo('/notices')">📢 公告</div>
+          <div class="mobile-menu-item" @click="navTo('/chat')">💬 聊天</div>
+        </template>
+        <template v-else-if="userInfo.role === 1">
+          <div class="mobile-menu-item" @click="navTo('/landlord/dashboard')">📊 仪表盘</div>
+          <div class="mobile-menu-item" @click="navTo('/landlord/rooms')">🏠 房源管理</div>
+          <div class="mobile-menu-item" @click="navTo('/landlord/orders')">📋 订单管理</div>
+          <div class="mobile-menu-item" @click="navTo('/landlord/bill')">💰 账单对账</div>
+          <div class="mobile-menu-item" @click="navTo('/landlord/repairs')">🔧 报修管理</div>
+          <div class="mobile-menu-item" @click="navTo('/notices')">📢 公告</div>
+          <div class="mobile-menu-item" @click="navTo('/chat')">💬 聊天</div>
+          <div class="mobile-menu-divider">🧭 租客功能</div>
+          <div class="mobile-menu-item sub" @click="navTo('/rooms')">🏘️ 找房源</div>
+          <div class="mobile-menu-item sub" @click="navTo('/tenant/my/orders')">📄 我的订单</div>
+          <div class="mobile-menu-item sub" @click="navTo('/tenant/my/favorites')">❤️ 我的收藏</div>
+          <div class="mobile-menu-item sub" @click="navTo('/tenant/my/evaluations')">⭐ 我的评价</div>
+          <div class="mobile-menu-item sub" @click="navTo('/tenant/my/repairs')">🔧 我的报修</div>
+        </template>
+        <template v-else-if="userInfo.role === 0">
+          <div class="mobile-menu-item" @click="navTo('/admin/dashboard')">📈 运营大屏</div>
+          <div class="mobile-menu-divider">👤 用户账号</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/users')">用户账号管控</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/tenants')">租客管理</div>
+          <div class="mobile-menu-divider">🏘️ 房源管理</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/rooms')">房源管理</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/rooms/audit')">房源审核</div>
+          <div class="mobile-menu-item" @click="navTo('/admin/landlords')">💼 房东资质</div>
+          <div class="mobile-menu-divider">📦 订单与纠纷</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/orders')">订单管理</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/disputes')">纠纷处理</div>
+          <div class="mobile-menu-divider">📢 内容管理</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/notices')">公告管理</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/banners')">轮播图管理</div>
+          <div class="mobile-menu-divider">🛡️ 监督与报表</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/supervision')">报修投诉督办</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/reports')">数据报表</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/analytics')">数据分析</div>
+          <div class="mobile-menu-item sub" @click="navTo('/admin/messages')">消息管理</div>
+          <div class="mobile-menu-item" @click="navTo('/admin/config')">⚙️ 平台配置</div>
+          <div class="mobile-menu-item" @click="navTo('/chat')">💬 聊天</div>
+        </template>
+      </div>
+    </el-drawer>
+
     <main class="main-content">
       <router-view />
     </main>
@@ -124,6 +187,7 @@ import { getUserInfo } from '@/api/user'
 
 const router = useRouter()
 const userInfo = ref(null)
+const mobileDrawer = ref(false)
 
 // ===== 主题切换（浅色 / 夜晚深色） =====
 const isDark = ref(document.documentElement.classList.contains('dark'))
@@ -167,6 +231,11 @@ const goToProfile = () => {
   } else {
     router.push('/login')
   }
+}
+
+const navTo = (path) => {
+  mobileDrawer.value = false
+  router.push(path)
 }
 </script>
 
@@ -240,5 +309,46 @@ const goToProfile = () => {
   background: var(--bg-card);
   border-top: 1px solid var(--border-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== 移动端菜单样式 ===== */
+.mobile-nav-actions { display: none; }
+.hamburger-btn { font-size: 24px; padding: 4px 8px; color: var(--text-main); }
+.hamburger-icon { line-height: 1; }
+
+.mobile-menu { padding: 8px 0; }
+.mobile-menu-item {
+  padding: 14px 20px;
+  font-size: 15px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.mobile-menu-item:hover { background: var(--el-color-primary-light-9); }
+.mobile-menu-item.sub { padding-left: 40px; font-size: 14px; color: var(--text-sub); }
+.mobile-menu-divider {
+  padding: 12px 20px 4px;
+  font-size: 12px;
+  color: var(--el-color-primary);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* ===== 手机端适配 ===== */
+@media (max-width: 768px) {
+  .header { padding: 0 12px; height: 52px; }
+  .logo { font-size: 16px; }
+  .nav { display: none !important; }
+  .mobile-nav-actions { display: flex; flex: 1; margin-left: 8px; }
+  .user-info { gap: 6px; font-size: 13px; }
+  .user-info .el-button { font-size: 12px; padding: 0 4px; }
+  .theme-toggle { font-size: 18px; padding: 2px; }
+  .main-content { padding: 10px; }
+}
+
+@media (max-width: 480px) {
+  .logo { font-size: 14px; }
+  .user-info span:first-child { display: none; }
 }
 </style>

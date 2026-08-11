@@ -29,7 +29,7 @@
     <div class="section" v-reveal>
       <h2>🔥 热门房源</h2>
       <el-row :gutter="20">
-        <el-col :span="6" v-for="(room, idx) in hotRooms" :key="room.id" v-reveal="{ delay: (idx % 4) * 80 }">
+        <el-col :xs="24" :sm="12" :md="8" :lg="6" v-for="(room, idx) in hotRooms" :key="room.id" v-reveal="{ delay: (idx % 4) * 80 }">
           <el-card :body-style="{ padding: '10px' }" class="room-card">
             <img :src="room.cover || `https://loremflickr.com/300/200/house?random=${room.id}`" class="room-cover" />
             <div class="room-title">{{ room.title }}</div>
@@ -334,6 +334,9 @@ onMounted(loadData)
   .home-page {
     padding: 0 8px 24px;
   }
+  .home-page :deep(.el-carousel__container) {
+    height: 200px !important;
+  }
   .banner-title {
     left: 16px;
     bottom: 16px;
@@ -343,12 +346,36 @@ onMounted(loadData)
   .search-box {
     padding: 14px 16px;
     gap: 8px;
+    flex-direction: column;
   }
+  .search-box .el-input { width: 100% !important; }
+  .search-box .el-button { width: 100%; }
   .section h2 {
     font-size: 16px;
   }
   .room-cover {
     height: 110px;
   }
+  .room-card {
+    margin-bottom: 10px;
+  }
+  .notice-list li {
+    padding: 10px 12px;
+  }
+  .notice-list a {
+    font-size: 13px;
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page :deep(.el-carousel__container) {
+    height: 150px !important;
+  }
+  .banner-title { font-size: 14px; padding: 4px 10px; }
+  .room-cover { height: 160px; }
+  .room-title { font-size: 13px; }
+  .room-price { font-size: 14px; }
+  .section h2 { font-size: 15px; }
 }
 </style>

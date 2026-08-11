@@ -294,6 +294,16 @@ html.dark .room-status-tag.on {
   .f-title, .f-addr {
     width: 100%;
   }
+  .f-price {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .f-price .el-input {
+    width: 40%;
+  }
+  .f-search-btn, .f-reset-btn {
+    width: 100%;
+  }
   .room-item {
     flex-direction: column;
   }
@@ -305,5 +315,16 @@ html.dark .room-status-tag.on {
     margin-left: 0;
     margin-top: 10px;
   }
+  .pagination :deep(.el-pagination) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-cover { height: 150px; }
+  .room-title { font-size: 14px; }
+  .room-price { font-size: 17px; }
+  .room-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
 }
 </style>
