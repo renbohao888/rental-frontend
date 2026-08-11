@@ -1,0 +1,430 @@
+/* =========================================================
+   58 同城风格全局主题（橙色主调 #FF6A00）
+   覆盖 Element Plus 的主题色变量
+   ========================================================= */
+:root {
+  --el-color-primary: #ff6a00;
+  --el-color-primary-light-3: #ff8b3d;
+  --el-color-primary-light-5: #ffa366;
+  --el-color-primary-light-7: #ffc59a;
+  --el-color-primary-light-8: #ffd6b3;
+  --el-color-primary-light-9: #ffedde;
+  --el-color-primary-dark-2: #cc5500;
+
+  --el-color-danger: #e8341e;
+  --el-color-danger-light-3: #ef6a5a;
+  --el-color-danger-light-5: #f5988d;
+  --el-color-danger-light-7: #fbc6c0;
+  --el-color-danger-light-8: #fddad5;
+  --el-color-danger-light-9: #feefed;
+  --el-color-danger-dark-2: #c02a17;
+
+  --el-border-radius-base: 6px;
+  --el-border-radius-small: 4px;
+  --el-border-radius-round: 20px;
+
+  /* ============ 语义化主题变量（浅色） ============ */
+  --bg-page: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-soft: #fafafa;
+  --bg-hover: #f0f0f5;
+  --text-main: #1a1a2e;
+  --text-sub: #8c8c9e;
+  --text-light: #b8b8c8;
+  --border-color: #ebeef5;
+  --border-strong: #dcdce8;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(255, 106, 0, 0.15);
+}
+
+/* ============ 暗色主题（夜晚深色 · 彻底化设计） ============ */
+html.dark {
+  /* —— 背景分层：深灰蓝黑，卡片逐级抬升 —— */
+  --bg-page: #0d1016;
+  --bg-card: #151a23;
+  --bg-soft: #1b222d;
+  --bg-hover: #232b39;
+  --bg-float: #1a212c;
+
+  /* —— 文字层级 —— */
+  --text-main: #e8ebf1;
+  --text-sub: #98a2b3;
+  --text-light: #5b6472;
+
+  --border-color: #252d3a;
+  --border-strong: #39424f;
+
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-strong: rgba(255, 106, 0, 0.28);
+
+  /* —— Element Plus 暗色变量完整映射（让组件彻底变暗） —— */
+  --el-bg-color-page: var(--bg-page);
+  --el-bg-color: var(--bg-card);
+  --el-bg-color-overlay: var(--bg-float);
+  --el-fill-color-blank: var(--bg-card);
+  --el-fill-color: var(--bg-soft);
+  --el-fill-color-light: var(--bg-hover);
+  --el-fill-color-lighter: #202834;
+  --el-fill-color-extra-light: var(--bg-soft);
+  --el-fill-color-dark: #090c11;
+  --el-fill-color-darker: #05070a;
+
+  --el-text-color-primary: var(--text-main);
+  --el-text-color-regular: #c3cad6;
+  --el-text-color-secondary: var(--text-sub);
+  --el-text-color-placeholder: var(--text-light);
+  --el-text-color-disabled: #49515e;
+
+  --el-border-color: var(--border-color);
+  --el-border-color-light: #2f3745;
+  --el-border-color-lighter: var(--border-color);
+  --el-border-color-extra-light: #1f2630;
+
+  --el-mask-color: rgba(4, 6, 9, 0.75);
+  --el-mask-color-extra-light: rgba(4, 6, 9, 0.35);
+
+  --el-box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --el-box-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+  /* 深色下主色系提亮，保证橙色/红色对比度 */
+  --el-color-primary-light-3: #ff9a55;
+  --el-color-primary-light-5: #ffb078;
+  --el-color-primary-light-7: #ffc9a0;
+  --el-color-primary-light-8: #ffd6b8;
+  --el-color-primary-light-9: #ffead9;
+
+  --el-color-danger-light-3: #f07a68;
+  --el-color-danger-light-5: #f59a8b;
+  --el-color-danger-light-7: #f8b7ad;
+  --el-color-danger-light-8: #f9c7bf;
+  --el-color-danger-light-9: #fbe0dc;
+}
+
+html, body {
+  background: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============ 58 同城风格卡片 ============ */
+.rc-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px var(--shadow-color);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+.rc-card:hover {
+  box-shadow: 0 6px 18px var(--shadow-strong);
+  transform: translateY(-2px);
+}
+
+/* 橙色价格文本 */
+.rc-price {
+  color: #ff6a00;
+  font-weight: 700;
+}
+
+/* 橙色标签 */
+.rc-tag {
+  display: inline-block;
+  background: #fff3ea;
+  color: #ff6a00;
+  border: 1px solid #ffc59a;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 0 6px;
+  line-height: 20px;
+}
+html.dark .rc-tag {
+  background: rgba(255, 106, 0, 0.15);
+  border-color: rgba(255, 106, 0, 0.4);
+}
+
+/* Element Plus 组件细节圆角 */
+.el-button {
+  border-radius: 6px;
+}
+.el-input__wrapper,
+.el-textarea__inner {
+  border-radius: 6px;
+}
+
+/* ============ 通用深色微调 ============ */
+html.dark .el-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+html.dark .el-divider {
+  border-color: var(--border-color);
+}
+html.dark .el-empty__description p {
+  color: var(--text-sub);
+}
+
+/* 页面主文字颜色兜底（避免深色模式下残留深色文字） */
+.room-title,
+.section h2,
+h1, h2, h3, h4 {
+  color: var(--text-main);
+}
+
+/* =========================================================
+   滚动进入视口动画（v-reveal 指令配套样式）
+   ========================================================= */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-left {
+  transform: translateX(-40px);
+}
+.reveal-right {
+  transform: translateX(40px);
+}
+.reveal-zoom {
+  transform: scale(0.9);
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* =========================================================
+   暗色模式 · 全局元素彻底化覆盖（后台/房东/租客所有页面通用）
+   ========================================================= */
+html.dark .el-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
+  box-shadow: 0 1px 4px var(--shadow-color);
+}
+html.dark .el-card.is-hover-shadow:hover {
+  box-shadow: 0 6px 18px var(--shadow-color);
+}
+html.dark .el-card__header {
+  border-bottom: 1px solid var(--border-color);
+}
+html.dark .el-card__header,
+html.dark .el-card__body {
+  color: var(--text-main);
+}
+
+/* —— 表格 —— */
+html.dark .el-table {
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+html.dark .el-table th.el-table__cell {
+  background: var(--bg-soft);
+  color: var(--text-sub);
+}
+html.dark .el-table tr,
+html.dark .el-table__body tr:hover > td.el-table__cell,
+html.dark .el-table__expanded-cell {
+  background: var(--bg-card);
+}
+html.dark .el-table__body tr:hover > td.el-table__cell {
+  background: var(--bg-hover);
+}
+html.dark .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: var(--bg-soft);
+}
+html.dark .el-table--border .el-table__inner-wrapper::after,
+html.dark .el-table--border .el-table__cell,
+html.dark .el-table--group,
+html.dark .el-table--group::after {
+  border-color: var(--border-color);
+}
+html.dark .el-table__empty-block {
+  background: var(--bg-card);
+}
+
+/* —— 分页 —— */
+html.dark .el-pagination {
+  color: var(--text-sub);
+}
+html.dark .el-pagination .el-pager li {
+  background: var(--bg-card);
+  color: var(--text-sub);
+}
+html.dark .el-pagination .el-pager li.is-active {
+  background: var(--el-color-primary);
+  color: #fff;
+}
+html.dark .el-pagination button {
+  background: var(--bg-card);
+  color: var(--text-sub);
+}
+html.dark .el-pagination button.is-disabled {
+  color: var(--text-light);
+}
+
+/* —— 菜单 / 导航 —— */
+html.dark .el-menu {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+html.dark .el-menu--horizontal {
+  border-bottom-color: var(--border-color);
+}
+html.dark .el-menu-item {
+  color: var(--text-sub);
+}
+html.dark .el-menu-item:hover,
+html.dark .el-menu-item:focus {
+  background: var(--bg-hover);
+  color: var(--text-main);
+}
+html.dark .el-menu-item.is-active {
+  color: var(--el-color-primary);
+}
+
+/* —— 输入类 —— */
+html.dark .el-input__wrapper {
+  background: var(--bg-soft);
+  box-shadow: 0 0 0 1px var(--border-color) inset;
+}
+html.dark .el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset;
+}
+html.dark .el-textarea__inner {
+  background: var(--bg-soft);
+  box-shadow: 0 0 0 1px var(--border-color) inset;
+}
+
+/* —— 弹层：下拉 / 气泡 / 选择器 —— */
+html.dark .el-popper.is-light,
+html.dark .el-select-dropdown,
+html.dark .el-dropdown-menu {
+  background: var(--bg-float);
+  border-color: var(--border-color);
+}
+html.dark .el-popper.is-light .el-popper__arrow::before {
+  background: var(--bg-float);
+  border-color: var(--border-color);
+}
+html.dark .el-select-dropdown__item.hover,
+html.dark .el-select-dropdown__item:hover {
+  background: var(--bg-hover);
+}
+
+/* —— 对话框 / 抽屉 / 消息 —— */
+html.dark .el-dialog {
+  background: var(--bg-card);
+}
+html.dark .el-drawer {
+  background: var(--bg-card);
+}
+html.dark .el-message-box {
+  background: var(--bg-card);
+}
+
+/* —— 标签页 —— */
+html.dark .el-tabs__item {
+  color: var(--text-sub);
+}
+html.dark .el-tabs__item.is-active,
+html.dark .el-tabs__item:hover {
+  color: var(--el-color-primary);
+}
+html.dark .el-tabs__nav-wrap::after {
+  background-color: var(--border-color);
+}
+html.dark .el-tabs__active-bar {
+  background-color: var(--el-color-primary);
+}
+
+/* —— 描述列表 / 折叠面板 —— */
+html.dark .el-descriptions {
+  background: var(--bg-card);
+}
+html.dark .el-descriptions__body,
+html.dark .el-descriptions__label,
+html.dark .el-descriptions__content {
+  background: var(--bg-card);
+}
+html.dark .el-collapse {
+  border-color: var(--border-color);
+}
+html.dark .el-collapse-item__header,
+html.dark .el-collapse-item__wrap {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+/* —— 通用浅底块兜底（回复块 / 提示条 / 金额条等） —— */
+html.dark .eval-reply,
+html.dark .repair-reply,
+html.dark .total-bar {
+  background: var(--bg-soft);
+  color: var(--text-sub);
+}
+
+/* —— 空态 / 骨架 / 分割线 —— */
+html.dark .el-empty__description p {
+  color: var(--text-sub);
+}
+html.dark .el-skeleton__item {
+  background: var(--bg-soft);
+}
+html.dark .el-divider {
+  border-color: var(--border-color);
+}
+
+/* —— 后台/个人中心常见容器兜底（透明即可，内部卡片自带底色） —— */
+html.dark .page-container,
+html.dark .page-header,
+html.dark .filter-bar {
+  background: transparent;
+}
+
+/* —— 登录/注册/找回密码：深色下改用更暗的紫色渐变 —— */
+html.dark .login-container,
+html.dark .register-container,
+html.dark .forgot-container {
+  background: linear-gradient(135deg, #12152e 0%, #231b3e 55%, #31214e 100%);
+}
+html.dark .login-box .el-button,
+html.dark .register-box .el-button,
+html.dark .forgot-box .el-button {
+  background: linear-gradient(135deg, #7d5cf0 0%, #5f3fc4 100%);
+}
+html.dark .login-tabs .el-tabs__active-bar {
+  background: linear-gradient(135deg, #7d5cf0 0%, #5f3fc4 100%);
+}
+
+/* —— 深色滚动条 —— */
+html.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2e3746;
+  border-radius: 5px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3b4556;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+/* —— 卡片 hover 阴影在暗色下加深 —— */
+html.dark .rc-card:hover {
+  box-shadow: 0 8px 22px var(--shadow-strong);
+}
+

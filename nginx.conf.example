@@ -1,0 +1,38 @@
+# ============================================================
+# 前端 Nginx 配置示例（含 SPA history 路由回退 + 反向代理后端）
+# 放到 /etc/nginx/conf.d/rental.conf，然后 nginx -s reload
+# ============================================================
+server {
+    listen 80;
+    server_name your-domain.com;          # 换成你的域名或服务器 IP
+
+    # 前端静态文件（npm run build 后的 dist 目录）
+    root /var/www/rental-frontend/dist;
+    index index.html;
+
+    # 图片上传目录（后端 file.upload.path 指向的位置，可让前端直接访问）
+    location /uploads/ {
+        alias /var/www/rental-uploads/;
+    }
+
+    # 反向代理后端 API
+    location /api/ {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 200m;        # 支持大文件上传
+    }
+
+    # SPA history 路由回退：所有非文件请求都交给 index.html
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # 静态资源缓存
+    location ~* \.(js|css|png|jpg|jpeg|gif|svg|woff2?)$ {
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+}

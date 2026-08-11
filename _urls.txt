@@ -1,0 +1,138 @@
+﻿D:\work\rental-frontend\src\api\appointment.js -> url: '/appointment/submit',
+D:\work\rental-frontend\src\api\appointment.js -> url: '/appointment/my',
+D:\work\rental-frontend\src\api\appointment.js -> url: `/appointment/cancel/${id}`,
+D:\work\rental-frontend\src\api\appointment.js -> url: `/appointment/view/${id}`,
+D:\work\rental-frontend\src\api\banner.js -> url: '/banner/list',
+D:\work\rental-frontend\src\api\chat.js -> url: '/friend/search',
+D:\work\rental-frontend\src\api\chat.js -> url: '/friend/request',
+D:\work\rental-frontend\src\api\chat.js -> url: '/friend/list',
+D:\work\rental-frontend\src\api\chat.js -> url: '/friend/requests',
+D:\work\rental-frontend\src\api\chat.js -> url: '/friend/handle',
+D:\work\rental-frontend\src\api\chat.js -> url: `/friend/remove/${friendId}`,
+D:\work\rental-frontend\src\api\chat.js -> url: '/chat/send',
+D:\work\rental-frontend\src\api\chat.js -> url: '/chat/history',
+D:\work\rental-frontend\src\api\chat.js -> url: '/chat/unread/count',
+D:\work\rental-frontend\src\api\chat.js -> url: '/chat/read',
+D:\work\rental-frontend\src\api\message.js -> url: '/message/list',
+D:\work\rental-frontend\src\api\message.js -> url: '/message/share',
+D:\work\rental-frontend\src\api\message.js -> url: `/message/delete/${messageId}`,
+D:\work\rental-frontend\src\api\message.js -> url: '/message/unread/count',
+D:\work\rental-frontend\src\api\notice.js -> url: '/notice/list',
+D:\work\rental-frontend\src\api\notice.js -> url: '/notice/admin/list',
+D:\work\rental-frontend\src\api\notice.js -> url: '/notice/add',
+D:\work\rental-frontend\src\api\notice.js -> url: '/notice/update',
+D:\work\rental-frontend\src\api\notice.js -> url: `/notice/admin/delete/${noticeId}`,
+D:\work\rental-frontend\src\api\order.js -> url: '/order/create',
+D:\work\rental-frontend\src\api\order.js -> url: '/order/my',
+D:\work\rental-frontend\src\api\room.js -> url: '/room/list',
+D:\work\rental-frontend\src\api\room.js -> url: `/room/detail/${id}`,
+D:\work\rental-frontend\src\api\room.js -> url: '/room/recommend/hot',
+D:\work\rental-frontend\src\api\room.js -> url: `/room/calendar/${roomId}`,
+D:\work\rental-frontend\src\api\room.js -> url: '/room/my',
+D:\work\rental-frontend\src\api\room.js -> url: '/room/add',
+D:\work\rental-frontend\src\api\room.js -> url: '/room/update',
+D:\work\rental-frontend\src\api\room.js -> url: `/room/status/${roomId}`,
+D:\work\rental-frontend\src\api\room.js -> url: `/room/audit/${roomId}`,
+D:\work\rental-frontend\src\api\room.js -> url: `/room/delete/${roomId}`,
+D:\work\rental-frontend\src\api\user.js -> url: '/user/login',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/register',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/info',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/update',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/uploadAvatar',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/sendSms',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/registerByPhone',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/smsLogin',
+D:\work\rental-frontend\src\api\user.js -> url: '/user/resetPassword',
+D:\work\rental-frontend\src\api\user.js -> url: `/user/detail/${userId}`,
+D:\work\rental-frontend\src\utils\request.js -> baseURL: 'http://localhost:8080/api',
+D:\work\rental-frontend\src\views\admin\AdminRooms.vue -> url: '/room/admin/list',
+D:\work\rental-frontend\src\views\admin\AdminTenants.vue -> url: '/user/admin/list',
+D:\work\rental-frontend\src\views\admin\AdminTenants.vue -> url: `/user/admin/toggle-status/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Analytics.vue -> const res = await request({ url: '/dashboard/admin/stats', method: 'get' })
+D:\work\rental-frontend\src\views\admin\Banners.vue -> const emptyForm = () => ({ id: null, title: '', imageUrl: '', linkUrl: '', sortOrder: 0, status: 1 })
+D:\work\rental-frontend\src\views\admin\Banners.vue -> const res = await request({ url: '/banner/admin/list', method: 'get', params: { pageNum: pageNum.value, pageSize: pageSize.value } })
+D:\work\rental-frontend\src\views\admin\Banners.vue -> const res = await request({ url: `/banner/admin/${row.id}`, method: 'delete' })
+D:\work\rental-frontend\src\views\admin\Config.vue -> const res = await request({ url: '/config/admin/list', method: 'get', params })
+D:\work\rental-frontend\src\views\admin\Config.vue -> const res = await request({ url: `/config/admin/${row.id}`, method: 'delete' })
+D:\work\rental-frontend\src\views\admin\Dashboard.vue -> const res = await request({ url: '/dashboard/admin/stats', method: 'get' })
+D:\work\rental-frontend\src\views\admin\Disputes.vue -> const res = await request({ url: '/dispute/admin/list', method: 'get', params })
+D:\work\rental-frontend\src\views\admin\Disputes.vue -> url: '/dispute/handle',
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> url: '/user/admin/list',
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> url: '/room/admin/list',
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> url: `/user/admin/toggle-status/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> const res = await request({ url: '/landlord/applications', method: 'get', params })
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> url: `/landlord/audit/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> url: `/landlord/audit/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Landlords.vue -> url: `/landlord/revoke/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Messages.vue -> const res = await request({ url: '/notice/list', method: 'get', params: { pageNum: 1, pageSize: 20 } })
+D:\work\rental-frontend\src\views\admin\Messages.vue -> const res = await request({ url: '/dispute/admin/list', method: 'get', params: { pageNum: 1, pageSize: 20 } })
+D:\work\rental-frontend\src\views\admin\Orders.vue -> const res = await request({ url: '/order/admin/all', method: 'get', params })
+D:\work\rental-frontend\src\views\admin\Orders.vue -> url: `/order/admin/force-refund/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Orders.vue -> url: `/order/admin/force-checkout/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Orders.vue -> url: `/order/admin/force-delete/${row.id}`,
+D:\work\rental-frontend\src\views\admin\Orders.vue -> url: '/order/admin/force-delete/batch',
+D:\work\rental-frontend\src\views\admin\Reports.vue -> const res = await request({ url: '/dashboard/admin/stats', method: 'get' })
+D:\work\rental-frontend\src\views\admin\RoomAudit.vue -> url: '/room/admin/list',
+D:\work\rental-frontend\src\views\admin\Supervision.vue -> const res = await request({ url: '/repair/admin/supervision/stats', method: 'get' })
+D:\work\rental-frontend\src\views\admin\Supervision.vue -> url: '/repair/admin/supervision/list',
+D:\work\rental-frontend\src\views\admin\Users.vue -> const res = await request({ url: '/user/admin/list', method: 'get', params })
+D:\work\rental-frontend\src\views\admin\Users.vue -> url: `/user/admin/toggle-status/${row.id}`,
+D:\work\rental-frontend\src\views\landlord\Analytics.vue -> const res = await request({ url: '/dashboard/landlord/stats', method: 'get' })
+D:\work\rental-frontend\src\views\landlord\Apply.vue -> const res = await request({ url: '/user/info', method: 'get' })
+D:\work\rental-frontend\src\views\landlord\Appointments.vue -> const res = await request({ url: '/appointment/landlord/list', method: 'get', params })
+D:\work\rental-frontend\src\views\landlord\Appointments.vue -> url: '/appointment/handle',
+D:\work\rental-frontend\src\views\landlord\Bill.vue -> const res = await request({ url: '/room/bill/rooms', method: 'get' })
+D:\work\rental-frontend\src\views\landlord\Dashboard.vue -> const res = await request({ url: '/dashboard/landlord/stats', method: 'get' })
+D:\work\rental-frontend\src\views\landlord\Evaluations.vue -> url: '/evaluation/landlord/list',
+D:\work\rental-frontend\src\views\landlord\Evaluations.vue -> url: '/evaluation/reply',
+D:\work\rental-frontend\src\views\landlord\Orders.vue -> const res = await request({ url: '/order/landlord/my', method: 'get' })
+D:\work\rental-frontend\src\views\landlord\Orders.vue -> const res = await request({ url: `/order/checkin/${row.id}`, method: 'post' })
+D:\work\rental-frontend\src\views\landlord\Orders.vue -> const res = await request({ url: `/order/reject/${row.id}`, method: 'post' })
+D:\work\rental-frontend\src\views\landlord\Orders.vue -> url: `/order/complete/${settleOrder.value.id}`,
+D:\work\rental-frontend\src\views\landlord\Orders.vue -> const res = await request({ url: `/order/landlord/${row.id}`, method: 'delete' })
+D:\work\rental-frontend\src\views\landlord\Orders.vue -> const res = await request({ url: '/order/landlord/batch', method: 'delete', data: ids })
+D:\work\rental-frontend\src\views\landlord\Repairs.vue -> const res = await request({ url: '/repair/landlord/list', method: 'get', params })
+D:\work\rental-frontend\src\views\landlord\Repairs.vue -> url: '/repair/handle',
+D:\work\rental-frontend\src\views\tenant\Evaluations.vue -> url: '/evaluation/my',
+D:\work\rental-frontend\src\views\tenant\Favorites.vue -> url: '/favorite/my',
+D:\work\rental-frontend\src\views\tenant\Favorites.vue -> url: '/favorite/cancel',
+D:\work\rental-frontend\src\views\tenant\Home.vue -> url: '/favorite/check',
+D:\work\rental-frontend\src\views\tenant\Home.vue -> url: '/favorite/cancel',
+D:\work\rental-frontend\src\views\tenant\Home.vue -> url: '/favorite/add',
+D:\work\rental-frontend\src\views\tenant\Messages.vue -> url: '/message/list',
+D:\work\rental-frontend\src\views\tenant\Messages.vue -> url: `/message/${messageId}`,
+D:\work\rental-frontend\src\views\tenant\Messages.vue -> url: '/message/share',
+D:\work\rental-frontend\src\views\tenant\NoticeDetail.vue -> const res = await request({ url: `/notice/${route.params.id}`, method: 'get' })
+D:\work\rental-frontend\src\views\tenant\Repairs.vue -> url: '/repair/my',
+D:\work\rental-frontend\src\views\tenant\Repairs.vue -> url: '/repair/submit',
+D:\work\rental-frontend\src\views\tenant\RoomDetail.vue -> url: `/user/detail/${res.data.landlordId}`,
+D:\work\rental-frontend\src\views\tenant\RoomDetail.vue -> url: '/favorite/check',
+D:\work\rental-frontend\src\views\tenant\RoomDetail.vue -> url: '/favorite/cancel',
+D:\work\rental-frontend\src\views\tenant\RoomDetail.vue -> url: '/favorite/add',
+D:\work\rental-frontend\src\views\tenant\RoomDetail.vue -> url: `/evaluation/room/${roomId}`,
+D:\work\rental-frontend\src\views\tenant\RoomDetail.vue -> url: '/evaluation/add',
+D:\work\rental-frontend\src\views\tenant\TenantHome.vue -> url: '/tenant/stats',
+D:\work\rental-frontend\src\views\tenant\TenantSearch.vue -> url: '/favorite/check',
+D:\work\rental-frontend\src\views\tenant\TenantSearch.vue -> url: '/favorite/cancel',
+D:\work\rental-frontend\src\views\tenant\TenantSearch.vue -> url: '/favorite/add',
+D:\work\rental-frontend\src\views\tenant\my\ChangePassword.vue -> url: '/user/changePassword',
+D:\work\rental-frontend\src\views\tenant\my\Disputes.vue -> url: '/dispute/list',
+D:\work\rental-frontend\src\views\tenant\my\Disputes.vue -> url: '/order/tenant/list',
+D:\work\rental-frontend\src\views\tenant\my\Disputes.vue -> url: '/dispute/add',
+D:\work\rental-frontend\src\views\tenant\my\Evaluations.vue -> url: '/evaluation/list',
+D:\work\rental-frontend\src\views\tenant\my\Evaluations.vue -> url: '/order/tenant/list',
+D:\work\rental-frontend\src\views\tenant\my\Evaluations.vue -> url: '/evaluation/add',
+D:\work\rental-frontend\src\views\tenant\my\Favorites.vue -> url: '/favorite/list',
+D:\work\rental-frontend\src\views\tenant\my\Favorites.vue -> url: '/favorite/cancel',
+D:\work\rental-frontend\src\views\tenant\my\LandlordApply.vue -> const res = await request({ url: '/landlord/application/my', method: 'get' })
+D:\work\rental-frontend\src\views\tenant\my\LandlordApply.vue -> url: '/landlord/apply',
+D:\work\rental-frontend\src\views\tenant\my\Orders.vue -> url: '/order/tenant/list',
+D:\work\rental-frontend\src\views\tenant\my\Orders.vue -> url: `/order/${orderId}/cancel`,
+D:\work\rental-frontend\src\views\tenant\my\Orders.vue -> url: `/order/${orderId}`,
+D:\work\rental-frontend\src\views\tenant\my\Orders.vue -> url: '/order/batch',
+D:\work\rental-frontend\src\views\tenant\my\Pay.vue -> const res = await request({ url: '/order/my', method: 'get' })
+D:\work\rental-frontend\src\views\tenant\my\Pay.vue -> url: '/pay/simulate',
+D:\work\rental-frontend\src\views\tenant\my\Repairs.vue -> const res = await request({ url: '/repair/my', method: 'get', params: { pageNum: 1, pageSize: 100 } })
+D:\work\rental-frontend\src\views\tenant\my\Repairs.vue -> const res = await request({ url: '/order/tenant/list', method: 'get', params: { pageNum: 1, pageSize: 100 } })
+D:\work\rental-frontend\src\views\tenant\my\Repairs.vue -> const res = await request({ url: '/repair/submit', method: 'post', data: fd })
+D:\work\rental-frontend\src\views\tenant\my\Repairs.vue -> const res = await request({ url: `/repair/cancel/${repairId}`, method: 'post' })
