@@ -1,14 +1,21 @@
 <template>
   <div class="ai-assistant">
-    <!-- 悬浮球（挂在页面边框右下角） -->
-    <div class="ai-fab" :class="{ active: open }" @click="toggle" title="租赁助手">
+    <!-- 悬浮球（可拖动） -->
+    <div
+      class="ai-fab"
+      :class="{ active: open }"
+      :style="fabStyle"
+      @mousedown.prevent="startDrag"
+      @click="handleClick"
+      title="租赁助手（可拖动）"
+    >
       <span class="fab-icon">{{ open ? '✕' : '🤖' }}</span>
       <span v-if="!open" class="fab-tip">租赁助手</span>
     </div>
 
     <!-- 小型聊天框 -->
     <transition name="ai-pop">
-      <div v-if="open" class="ai-panel">
+      <div v-if="open" class="ai-panel" :style="panelStyle">
         <div class="ai-header">
           <div class="ai-title">
             <div class="ai-logo">🤖</div>
@@ -74,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, reactive, computed, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { aiChat } from '@/api/ai'
 
@@ -85,6 +92,64 @@ const thinking = ref(false)
 const messages = ref([])
 const msgBoxRef = ref(null)
 let greeted = false
+
+// ===== 拖动逻辑 =====
+const position = reactive({ x: window.innerWidth - 80, y: window.innerHeight - 180 })
+const dragging = ref(false)
+let dragStartX = 0, dragStartY = 0, startPosX = 0, startPosY = 0
+const DRAG_THRESHOLD = 5
+let hasMoved = false
+
+const fabStyle = ref({
+  left: position.x + 'px',
+  top: position.y + 'px',
+  right: 'auto',
+  bottom: 'auto'
+})
+
+const panelStyle = computed(() => {
+  const panelHeight = 500
+  const panelWidth = 380
+  let left = position.x - panelWidth + 56
+  let top = position.y - panelHeight - 12
+  if (left < 8) left = 8
+  if (left + panelWidth > window.innerWidth - 8) left = window.innerWidth - panelWidth - 8
+  if (top < 8) top = position.y + 68
+  return { left: left + 'px', top: top + 'px', right: 'auto', bottom: 'auto' }
+})
+
+const startDrag = (e) => {
+  dragging.value = true
+  hasMoved = false
+  dragStartX = e.clientX
+  dragStartY = e.clientY
+  startPosX = position.x
+  startPosY = position.y
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', stopDrag)
+}
+
+const onDrag = (e) => {
+  if (!dragging.value) return
+  const dx = e.clientX - dragStartX
+  const dy = e.clientY - dragStartY
+  if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+    hasMoved = true
+  }
+  position.x = Math.max(0, Math.min(window.innerWidth - 56, startPosX + dx))
+  position.y = Math.max(0, Math.min(window.innerHeight - 56, startPosY + dy))
+  fabStyle.value = { left: position.x + 'px', top: position.y + 'px', right: 'auto', bottom: 'auto' }
+}
+
+const stopDrag = () => {
+  dragging.value = false
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+}
+
+const handleClick = () => {
+  if (!hasMoved) toggle()
+}
 
 const suggests = ['帮我推荐房源', '1000元以内的房源', '两室一厅', '天河区', '近地铁']
 
@@ -167,8 +232,6 @@ const goRoom = (id) => {
 <style scoped>
 .ai-assistant {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
   z-index: 3000;
 }
 
@@ -177,24 +240,25 @@ const goRoom = (id) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  position: fixed;
+  z-index: 3001;
   width: 56px;
   height: 56px;
   border-radius: 50%;
   background: linear-gradient(135deg, #ff8b3d, #ff6a00);
   color: #fff;
   font-size: 26px;
-  cursor: pointer;
+  cursor: grab;
   box-shadow: 0 6px 20px rgba(255, 106, 0, 0.45);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-left: auto;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+  user-select: none;
 }
+.ai-fab:active { cursor: grabbing; }
 .ai-fab:hover {
-  transform: scale(1.08) rotate(6deg);
+  transform: scale(1.08);
   box-shadow: 0 8px 26px rgba(255, 106, 0, 0.55);
 }
 .ai-fab.active {
-  transform: scale(1.05);
   background: linear-gradient(135deg, #555, #333);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
@@ -220,11 +284,10 @@ const goRoom = (id) => {
 /* ===== 聊天面板 ===== */
 .ai-panel {
   position: fixed;
-  right: 24px;
-  bottom: 92px;
+  z-index: 3000;
   width: 380px;
   max-height: 620px;
-  height: min(620px, calc(100vh - 140px));
+  height: min(620px, calc(100vh - 160px));
   display: flex;
   flex-direction: column;
   background: var(--bg-card);
@@ -234,6 +297,15 @@ const goRoom = (id) => {
   box-shadow: 0 16px 48px var(--shadow-color);
   overflow: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* 手机端面板全宽 */
+@media (max-width: 480px) {
+  .ai-panel {
+    left: 8px !important;
+    right: 8px !important;
+    width: auto;
+    max-height: 70vh;
+  }
 }
 
 /* 弹出动画 */

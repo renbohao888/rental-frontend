@@ -99,58 +99,11 @@
         </div>
       </aside>
 
-      <!-- ===== 右侧：好友聊天窗口 ===== -->
+      <!-- ===== 右侧：好友聊天窗口（点击好友跳转独立对话页） ===== -->
       <main class="chat-window" v-if="activeTab === 'chat'">
-        <template v-if="currentFriend">
-          <div class="chat-window-header">
-            <div class="cw-user">
-              <img class="cw-avatar" :src="currentFriend.avatar || defaultAvatar" />
-              <div>
-                <div class="cw-name">{{ currentFriend.nickname }}</div>
-                <div class="cw-account">账号：{{ currentFriend.accountNo }}</div>
-              </div>
-            </div>
-            <el-button link type="danger" size="small" @click="confirmRemoveFriend(currentFriend)">删除好友</el-button>
-          </div>
-
-          <div class="message-list" ref="messageListRef">
-            <div
-              v-for="msg in messages"
-              :key="msg.id"
-              class="message-row"
-              :class="String(msg.fromUserId) === String(myId) ? 'mine' : 'theirs'"
-            >
-              <img
-                class="msg-avatar"
-                :src="(String(msg.fromUserId) === String(myId) ? myAvatar : currentFriend.avatar) || defaultAvatar"
-              />
-              <div class="msg-content">
-                <div class="msg-time">{{ formatTime(msg.createTime) }}</div>
-                <div class="msg-bubble">{{ msg.content }}</div>
-              </div>
-            </div>
-            <div v-if="!messages.length" class="no-msg">打个招呼吧～</div>
-          </div>
-
-          <div class="input-area">
-            <el-input
-              v-model="draft"
-              type="textarea"
-              :rows="3"
-              resize="none"
-              maxlength="1000"
-              placeholder="输入消息内容，Enter 发送"
-              @keyup.enter.exact.prevent="sendMessage"
-            />
-            <div class="input-toolbar">
-              <span class="toolbar-tip">按 Enter 发送</span>
-              <el-button type="primary" :loading="sending" @click="sendMessage">发 送</el-button>
-            </div>
-          </div>
-        </template>
-        <div v-else class="chat-placeholder">
+        <div class="chat-placeholder">
           <div class="placeholder-icon">💬</div>
-          <p>选择左侧好友，开始聊天吧</p>
+          <p>点击左侧好友，开始聊天吧</p>
         </div>
       </main>
 
@@ -203,9 +156,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 import {
   searchUser,
@@ -213,11 +166,7 @@ import {
   getFriendList,
   getFriendRequests,
   handleFriendRequest,
-  removeFriend,
-  sendChatMessage,
-  getChatHistory,
-  getChatUnreadCount,
-  markChatRead
+  getChatUnreadCount
 } from '@/api/chat'
 import { getMessages } from '@/api/message'
 
@@ -226,22 +175,14 @@ const route = useRoute()
 const defaultAvatar = 'https://ui-avatars.com/api/?name=User&background=ff6a00&color=fff'
 
 const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
-const myId = userInfo.id
-const myAvatar = userInfo.avatar
 
 const searchAccount = ref('')
 const searchResult = ref(null)
 const pendingRequests = ref([])
 const friends = ref([])
-const currentFriend = ref(null)
-const messages = ref([])
-const draft = ref('')
-const sending = ref(false)
 const totalUnread = ref(0)
-const messageListRef = ref(null)
 
 let unreadTimer = null
-let historyTimer = null
 
 // ==================== 系统消息 ====================
 const activeTab = ref('chat')
@@ -314,18 +255,6 @@ const loadAll = () => {
   loadUnread()
 }
 
-const loadHistory = async () => {
-  if (!currentFriend.value) return
-  try {
-    const res = await getChatHistory(currentFriend.value.id)
-    if (res.code === 200) {
-      messages.value = res.data || []
-      scrollToBottom()
-    }
-  } catch (e) { /* ignore */ }
-}
-
-
 // ==================== 搜索 & 加好友 ====================
 
 const doSearch = async () => {
@@ -388,87 +317,8 @@ const scrollToBottom = async () => {
 }
 
 const selectFriend = async (friend) => {
-  currentFriend.value = friend
-  draft.value = ''
-  await loadHistory()
-  // 打开会话后把该好友的未读清零
-  await markChatRead(friend.id)
-  friend.unreadCount = 0
-  loadAll()
-  startHistoryTimer()
-}
-
-const sendMessage = async () => {
-  const content = (draft.value || '').trim()
-  if (!content) {
-    ElMessage.warning('请输入消息内容')
-    return
-  }
-  if (!currentFriend.value) return
-  sending.value = true
-  try {
-    const res = await sendChatMessage(currentFriend.value.id, content)
-    if (res.code === 200) {
-      draft.value = ''
-      await loadHistory()
-    }
-  } catch (e) { /* ignore */ }
-  finally {
-    sending.value = false
-  }
-}
-
-const confirmRemoveFriend = async (friend) => {
-  try {
-    await ElMessageBox.confirm(`确定删除好友「${friend.nickname}」吗？`, '提示', {
-      confirmButtonText: '删除',
-      cancelButtonText: '取消',
-      type: 'warning'
-    })
-  } catch (e) {
-    return
-  }
-  try {
-    const res = await removeFriend(friend.id)
-    if (res.code === 200) {
-      ElMessage.success('已删除好友')
-      if (currentFriend.value && currentFriend.value.id === friend.id) {
-        currentFriend.value = null
-        messages.value = []
-      }
-      loadAll()
-    }
-  } catch (e) { /* ignore */ }
-}
-
-// ==================== 轮询 ====================
-
-const startUnreadTimer = () => {
-  stopUnreadTimer()
-  unreadTimer = setInterval(loadUnread, 5000)
-}
-
-const stopUnreadTimer = () => {
-  if (unreadTimer) {
-    clearInterval(unreadTimer)
-    unreadTimer = null
-  }
-}
-
-const startHistoryTimer = () => {
-  stopHistoryTimer()
-  historyTimer = setInterval(() => {
-    if (currentFriend.value) {
-      loadHistory()
-    }
-  }, 3000)
-}
-
-const stopHistoryTimer = () => {
-  if (historyTimer) {
-    clearInterval(historyTimer)
-    historyTimer = null
-  }
+  // 跳转到独立聊天对话页
+  router.push(`/chat/${friend.id}`)
 }
 
 // ==================== 工具函数 ====================
@@ -499,6 +349,15 @@ const goBack = () => {
   }
 }
 
+const startUnreadTimer = () => {
+  stopUnreadTimer()
+  unreadTimer = setInterval(loadUnread, 5000)
+}
+
+const stopUnreadTimer = () => {
+  if (unreadTimer) { clearInterval(unreadTimer); unreadTimer = null }
+}
+
 // ==================== 生命周期 ====================
 
 onMounted(async () => {
@@ -507,21 +366,15 @@ onMounted(async () => {
   loadUnread()
   startUnreadTimer()
 
-  // 从房源详情「联系房东」跳转过来：自动选中该好友
+  // 从房源详情「联系房东」跳转过来：直接导航到对话页
   const friendIdParam = route.query.friendId
   if (friendIdParam) {
-    const target = friends.value.find(f => String(f.id) === String(friendIdParam))
-    if (target) {
-      await selectFriend(target)
-    } else {
-      ElMessage.info('你还不是该房东的好友，先搜索对方账号添加好友吧')
-    }
+    router.push(`/chat/${friendIdParam}`)
   }
 })
 
 onUnmounted(() => {
   stopUnreadTimer()
-  stopHistoryTimer()
 })
 </script>
 

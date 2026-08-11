@@ -19,6 +19,7 @@ const routes = [
 
       // 聊天（统一消息中心：好友聊天 + 系统消息）
       { path: 'chat', name: 'Chat', component: () => import('@/views/chat/Chat.vue'), meta: { requiresAuth: true, roles: [0, 1, 2] } },
+      { path: 'chat/:friendId', name: 'ChatConversation', component: () => import('@/views/chat/ChatConversation.vue'), meta: { requiresAuth: true, roles: [0, 1, 2] } },
 
       // 租客专区
       { path: 'tenant/home', name: 'TenantHome', component: () => import('@/views/tenant/TenantHome.vue'), meta: { requiresAuth: true, roles: [1, 2] } },
