@@ -103,7 +103,7 @@ onMounted(loadStats)
 .stat-card.purple .stat-value { color: #8b5cf6; }
 .hot-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #eee; }
 .hot-item.clickable { cursor: pointer; transition: all 0.2s; border-radius: 6px; }
-.hot-item.clickable:hover { background: #f0f9ff; transform: translateX(3px); }
+.hot-item.clickable:hover { background: var(--bg-hover); }
 .clickable-table :deep(.el-table__row) { cursor: pointer; }
 .card-header { display: flex; align-items: center; justify-content: space-between; }
 .hot-item:last-child { border-bottom: none; }

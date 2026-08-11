@@ -117,7 +117,7 @@ onMounted(loadNotices)
 }
 .notice-item:hover {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  border-color: #409eff;
+  border-color: var(--border-strong);
 }
 .notice-title { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .title-text { font-size: 15px; font-weight: 600; color: #333; }

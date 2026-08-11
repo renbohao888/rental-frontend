@@ -135,8 +135,8 @@ const goRoomDetail = () => {
   transition: all 0.2s;
 }
 .order-detail .room-card:hover {
-  border-color: #409eff;
-  background: #f0f9ff;
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 .room-cover {
   width: 90px;
