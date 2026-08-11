@@ -5,6 +5,28 @@ import router from '@/router'
 // API 基础地址：优先读取 .env 的 VITE_API_BASE_URL（部署公网时配置），本地默认 localhost:8080
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
 
+// 后端上传资源的源地址（用于把 /uploads/... 相对路径拼成绝对地址）
+const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, '')
+
+/**
+ * 将后端返回的相对上传路径（/uploads/...）递归转换为带域名的绝对地址。
+ * 本地开发由 Vite 代理处理，公网部署时图片才能正常显示。
+ */
+function absolutizeUploadPaths(value) {
+  if (typeof value === 'string') {
+    return value.startsWith('/uploads/') ? API_ORIGIN + value : value
+  }
+  if (Array.isArray(value)) {
+    return value.map(absolutizeUploadPaths)
+  }
+  if (value && typeof value === 'object') {
+    Object.keys(value).forEach((key) => {
+      value[key] = absolutizeUploadPaths(value[key])
+    })
+  }
+  return value
+}
+
 const request = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -32,7 +54,7 @@ request.interceptors.response.use(
 
     // 1. 业务成功：兼容数字或字符串 200 / 0，或直接返回对象的情况
     if (res.code == 200 || res.code == 0 || res.code === undefined) {
-      return res
+      return absolutizeUploadPaths(res)
     }
 
     // 2. Token 失效或未授权 (401 / 403)
