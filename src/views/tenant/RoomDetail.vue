@@ -106,6 +106,9 @@
             >
               {{ room.isFavorited ? '❤️ 已收藏' : '🤍 收藏' }}
             </el-button>
+            <el-button size="large" plain @click="openShareDialog" v-if="token">
+              📤 分享给好友
+            </el-button>
             <el-button
               v-if="room.longitude && room.latitude"
               size="large"
@@ -166,6 +169,35 @@
       <template #footer>
         <el-button @click="appointmentVisible = false">取消</el-button>
         <el-button type="primary" :loading="appointmentSubmitting" @click="handleSubmitAppointment">提交预约</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- 分享给好友弹窗 -->
+    <el-dialog v-model="shareVisible" title="📤 分享「{{ room?.title }}」给好友" width="480px" destroy-on-close>
+      <div v-loading="shareLoadingFriends">
+        <el-empty v-if="!shareLoadingFriends && !friendsForShare.length" description="还没有好友，先去聊天页面添加好友吧">
+          <el-button type="primary" @click="shareVisible = false; router.push('/chat')">去添加好友</el-button>
+        </el-empty>
+        <div v-for="f in friendsForShare" :key="f.id" class="share-friend-item"
+          :class="{ selected: selectedFriend && selectedFriend.id === f.id }"
+          @click="selectedFriend = selectedFriend?.id === f.id ? null : f">
+          <img class="share-friend-avatar" :src="f.avatar || defaultAvatar" />
+          <div class="share-friend-info">
+            <div class="share-friend-name">{{ f.nickname }}</div>
+            <div class="share-friend-account">{{ f.accountNo }}</div>
+          </div>
+          <el-checkbox :model-value="selectedFriend?.id === f.id" />
+        </div>
+      </div>
+      <div class="share-friend-msg" v-if="friendsForShare.length">
+        <el-input v-model="shareFriendMessage" type="textarea" :rows="2"
+          :placeholder="'说点什么吧，比如：' + (room?.title || '') + ' 很不错，来看看！'" maxlength="200" show-word-limit />
+      </div>
+      <template #footer>
+        <el-button @click="shareVisible = false">取 消</el-button>
+        <el-button type="primary" :disabled="!selectedFriend" :loading="shareSubmitting" @click="doShareToFriend">
+          发 送
+        </el-button>
       </template>
     </el-dialog>
 
@@ -264,6 +296,9 @@ import { Plus, Location } from '@element-plus/icons-vue'
 import { getRoomDetail, getRoomCalendar } from '@/api/room'
 import { createOrder } from '@/api/order'
 import { submitAppointment } from '@/api/appointment'
+import { getFriendList } from '@/api/chat'
+import { sendChatMessage } from '@/api/chat'
+import { shareRoom } from '@/api/message'
 import RoomCalendar from '@/components/RoomCalendar.vue'
 import request from '@/utils/request'
 import { buildAmapUri } from '@/utils/amap'
@@ -271,6 +306,7 @@ import { buildAmapUri } from '@/utils/amap'
 const route = useRoute()
 const router = useRouter()
 const roomId = route.params.id
+const defaultAvatar = 'https://ui-avatars.com/api/?name=User&background=ff6a00&color=fff'
 
 const loading = ref(false)
 const booking = ref(false)
@@ -600,6 +636,51 @@ const contactLandlord = () => {
   }
 }
 
+// ========== 分享房源给好友 ==========
+const shareVisible = ref(false)
+const shareLoadingFriends = ref(false)
+const shareSubmitting = ref(false)
+const friendsForShare = ref([])
+const selectedFriend = ref(null)
+const shareFriendMessage = ref('')
+
+const openShareDialog = async () => {
+  if (!token) { ElMessage.warning('请先登录'); router.push('/login'); return }
+  shareVisible.value = true
+  selectedFriend.value = null
+  shareFriendMessage.value = ''
+  shareLoadingFriends.value = true
+  try {
+    const res = await getFriendList()
+    if (res.code === 200) friendsForShare.value = res.data || []
+  } catch (e) { friendsForShare.value = [] }
+  finally { shareLoadingFriends.value = false }
+}
+
+const doShareToFriend = async () => {
+  if (!selectedFriend.value || !room.value) return
+  shareSubmitting.value = true
+  try {
+    const roomTitle = room.value.title
+    const roomPrice = room.value.price
+    const msgText = shareFriendMessage.value.trim()
+      ? `[房源分享] ${roomTitle} - ¥${roomPrice}/晚\n${shareFriendMessage.value.trim()}`
+      : `[房源分享] ${roomTitle} - ¥${roomPrice}/晚`
+
+    // 聊天消息
+    await sendChatMessage(selectedFriend.value.id, msgText)
+    // 系统消息分享
+    await shareRoom({
+      roomId: roomId,
+      recipientPhone: selectedFriend.value.accountNo,
+      message: shareFriendMessage.value.trim() || `推荐「${roomTitle}」给你！`
+    }).catch(() => {})
+    ElMessage.success('已分享给 ' + selectedFriend.value.nickname)
+    shareVisible.value = false
+  } catch (e) { /* ignore */ }
+  finally { shareSubmitting.value = false }
+}
+
 // 工具：格式化日期为 YYYY-MM-DD
 const formatDate = (date) => {
   const d = new Date(date)
@@ -800,6 +881,16 @@ onMounted(loadRoomDetail)
   display: flex;
   gap: 12px;
 }
+
+/* 分享对话框样式 */
+.share-friend-item { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
+.share-friend-item:hover { box-shadow: 0 2px 10px var(--shadow-color); }
+.share-friend-item.selected { border-color: #ff6a00; background: rgba(255, 106, 0, 0.06); }
+.share-friend-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.share-friend-info { flex: 1; min-width: 0; }
+.share-friend-name { font-size: 14px; font-weight: 600; color: var(--text-main); }
+.share-friend-account { font-size: 12px; color: var(--text-sub); }
+.share-friend-msg { margin-top: 12px; }
 
 /* 评论区样式 */
 .review-section { margin-top: 20px; }
