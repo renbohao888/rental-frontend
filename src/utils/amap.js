@@ -1,6 +1,6 @@
-// 高德地图 JS API 配置（请替换为你的 Key 与安全密钥）
-const AMAP_KEY = '***REMOVED***'
-const AMAP_SECURITY_CODE = '***REMOVED***'
+// 高德地图 JS API 配置（Key 与安全密钥从环境变量读取，详见 .env.example）
+const AMAP_KEY = import.meta.env.VITE_AMAP_KEY
+const AMAP_SECURITY_CODE = import.meta.env.VITE_AMAP_SECURITY_CODE
 
 let amapPromise = null
 
